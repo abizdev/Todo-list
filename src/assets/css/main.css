@@ -1,0 +1,59 @@
+@import 'fonts.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  font-family: 'roboto';
+  font-weight: 400;
+}
+.container {
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+.navbar {
+  width: 100%;
+  background: #F3EDF7;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 1px 3px rgba(0, 0, 0, 0.3);
+}
+.navbar-nav,
+.navbar-search form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+}
+.navbar-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.navbar-btn img {
+  width: 28px;
+}
+.btn-lang {
+  font-size: 20px;
+}
+.navbar-nav__title {
+  font-size: 22px;
+  line-height: 28px;
+}
+.navbar-search form {
+  gap: 10%;
+}
+.navbar-search__input {
+  flex-grow: 1;
+  height: 100%;
+  background: transparent;
+  outline: none;
+  border: none;
+}
+.navbar-search__input::placeholder {
+  font-size: 16px;
+  line-height: 20px;
+}
