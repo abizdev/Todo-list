@@ -1,7 +1,12 @@
 <template>
   <navbar />
-  <content-items />
-  <modal v-show="openOrCloseM" @closeModal="closeModal" @addItem="addItem" />
+  <content-items :itemList="itemList" />
+  <modal 
+    v-show="openOrCloseM" 
+    @closeModal="closeModal" 
+    @addItem="addItem" 
+    :currentId="currentId"
+  />
   <add-btn @openModal="openModal" />
 </template>
 
@@ -20,7 +25,9 @@ export default {
   },
   data() {
     return {
-      openOrCloseM: false
+      openOrCloseM: false,
+      currentId: 1,
+      itemList: []
     }
   },
   methods: {
@@ -31,9 +38,30 @@ export default {
       this.openOrCloseM = bool
     },
     addItem(itemObj) {
-      console.log(itemObj);
-    }
+      this.itemList.push(itemObj)
+      console.log(this.itemList);
+    },
   },
+  created() {
+    if(localStorage.list) {
+        const localList = localStorage.getItem('list')
+        this.itemList = JSON.parse(localList)
+        
+        if(this.itemList.length >= 1) {
+          this.currentId = this.itemList[this.itemList.length - 1].id
+          this.currentId++
+        }
+      }
+  },
+  watch: {
+    itemList: {
+      handler(updateList) {
+        console.log(updateList);
+        localStorage.setItem('list', JSON.stringify(this.itemList))
+      },
+      deep: true
+    }
+  }
 }
 </script>
 

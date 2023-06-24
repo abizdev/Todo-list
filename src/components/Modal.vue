@@ -22,10 +22,12 @@
 
 <script>
 export default {
+  props: ['currentId'],
   data() {
     return {
       title: '',
       desc: '',
+      id: this.currentId,
     }
   },
   methods: {
@@ -36,10 +38,12 @@ export default {
     },
     addItem() {
       if(this.title != '' && this.desc != '') {
+        console.log(this.id);
         const item = {
-          id: 1,
+          id: this.id++,
           title: this.title,
-          desc: this.desc
+          desc: this.desc,
+          date: new Date().toLocaleString()
         }
         this.$emit('addItem', item)
         this.closeModal()

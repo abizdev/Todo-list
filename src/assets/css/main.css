@@ -102,7 +102,7 @@
 }
 .content-items.flex{
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 20px;
 }
 .content-items.grid{
@@ -121,7 +121,7 @@
   flex-direction: column;
 }
 .item-top.row {
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }

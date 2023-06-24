@@ -1,10 +1,10 @@
 <template>
   <div class="item">
-    <div class="item-top">
-      <h3 class="item-top__title">Title</h3>
-      <span class="item-top__date">07.03.2022</span>
+    <div class="item-top" :class="grid ? '' : 'row'">
+      <h3 class="item-top__title">{{ item.title }}</h3>
+      <span class="item-top__date">{{ item.date }}</span>
     </div>
-    <p class="item-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, quae ducimus molestias sit provident ex officiis nam, vitae adipisci nostrum temporibus, eligendi ipsa asperiores? Hic doloribus ratione ab fuga repellat!</p>
+    <p class="item-text">{{ item.desc }}</p>
     <div class="item-btn">
       <button class="btn-edit">
         <img src="@/assets/images/change.png" alt="">
@@ -20,6 +20,6 @@
 
 <script>
   export default {
-    
+    props: ['item', 'grid'],
   }
 </script>
