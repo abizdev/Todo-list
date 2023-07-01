@@ -12,8 +12,8 @@
         <button class="navbar-btn back" @click="navbar = !navbar">
           <img src="@/assets/images/back.svg" alt="">
         </button>
-        <input type="text" placeholder="Поиск..." class="navbar-search__input">
-        <button class="navbar-btn claer" @click.prevent="">
+        <input type="text" placeholder="Поиск..." class="navbar-search__input" v-model="search">
+        <button class="navbar-btn claer" @click.prevent="search = ''">
           <img src="@/assets/images/clear.svg" alt="">
         </button>
       </form>
@@ -25,8 +25,15 @@
   export default {
     data() {
       return {
-        navbar: true
+        navbar: true,
+        search: ''
       }
     },
+    watch: {
+      search(val) {
+        this.$emit('getSearch', val)
+        console.log(val);
+      }
+    }
   }
 </script>

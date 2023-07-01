@@ -1,11 +1,20 @@
 <template>
-  <navbar />
-  <content-items :itemList="itemList" />
+  <navbar 
+  @getSearch="search = $event"
+  />
+  <content-items 
+    :itemList="filterItemList"
+    @changeItem="changeItem"
+    @delItem="delItem"
+  />
   <modal 
     v-show="openOrCloseM" 
     @closeModal="closeModal" 
     @addItem="addItem" 
     :currentId="currentId"
+    :edit="edit"
+    :itemObj="itemObj"
+    @editItem="editItem"
   />
   <add-btn @openModal="openModal" />
 </template>
@@ -26,21 +35,48 @@ export default {
   data() {
     return {
       openOrCloseM: false,
+      edit: false,
       currentId: 1,
-      itemList: []
+      itemList: [],
+      itemObj: {},
+      search: ''
+    }
+  },
+  computed: {
+    filterItemList() {
+      return this.search ? 
+        this.itemList.filter(item => item.title.toLowerCase().includes(this.search.toLowerCase())) :
+        this.itemList
     }
   },
   methods: {
     openModal(bool) {
       this.openOrCloseM = bool
+      this.edit = false
     },
     closeModal(bool) {
       this.openOrCloseM = bool
     },
     addItem(itemObj) {
       this.itemList.push(itemObj)
-      console.log(this.itemList);
     },
+    changeItem(id) {
+      this.edit = this.openOrCloseM = true
+      let obj = this.itemList.find(item => item.id == id)
+      this.itemObj = obj
+    },
+    delItem(id) {
+      this.itemList = this.itemList.filter((item) => item.id != id)
+    },
+    editItem(obj) {
+      this.itemList.forEach(item => {
+        if(item.id == obj.id) {
+          item.title = obj.title
+          item.desc = obj.desc
+          item.date = obj.date
+        }
+      })
+    }
   },
   created() {
     if(localStorage.list) {

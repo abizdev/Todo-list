@@ -2,7 +2,8 @@
   <Transition name="scale">
     <div class="modal" @click="closeModal">
       <div class="modal__content" @click.stop>
-        <h4 class="modal__content--title">Добавить заметку</h4>
+        <h4 class="modal__content--title" v-if="!edit">Добавить заметку</h4>
+        <h4 class="modal__content--title" v-else>Изменить заметку</h4>
         <label class="modal__content--input">
           <span>Title</span>
           <input type="text" placeholder="Title" v-model="title">
@@ -12,8 +13,9 @@
           <input type="text" placeholder="Content" v-model="desc">
         </label>
         <div class="modal__content--btns">
-          <button class="modal-btn btn-add" @click="closeModal">Отмена</button>
-          <button class="modal-btn btn-cancel" @click="addItem">Добавить</button>
+          <button class="modal-btn btn-cancel" @click="closeModal">Отмена</button>
+          <button class="modal-btn btn-add" @click="addItem" v-if="!edit">Добавить</button>
+          <button class="modal-btn btn-add" @click="editItem" v-else>Изменить</button>
         </div>
       </div>
     </div>
@@ -22,7 +24,7 @@
 
 <script>
 export default {
-  props: ['currentId'],
+  props: ['currentId', 'edit', 'itemObj'],
   data() {
     return {
       title: '',
@@ -38,7 +40,6 @@ export default {
     },
     addItem() {
       if(this.title != '' && this.desc != '') {
-        console.log(this.id);
         const item = {
           id: this.id++,
           title: this.title,
@@ -46,6 +47,18 @@ export default {
           date: new Date().toLocaleString()
         }
         this.$emit('addItem', item)
+        this.closeModal()
+      }
+    },
+    editItem() {
+      if(this.title != '' && this.desc != '') {
+        const itemEditObj = {
+          id: this.itemObj.id,
+          title: this.title,
+          desc: this.desc,
+          date: new Date().toLocaleString()
+        }
+        this.$emit('editItem', itemEditObj)
         this.closeModal()
       }
     }

@@ -6,11 +6,11 @@
     </div>
     <p class="item-text">{{ item.desc }}</p>
     <div class="item-btn">
-      <button class="btn-edit">
+      <button class="btn-edit" @click="$emit('change-item', item.id)">
         <img src="@/assets/images/change.png" alt="">
         <span>РЕДАКТИРОВАТЬ</span>
       </button>
-      <button class="btn-del">
+      <button class="btn-del" @click="$emit('del-item', item.id)">
         <img src="@/assets/images/delete.png" alt="">
         <span>Удалить</span>
       </button>

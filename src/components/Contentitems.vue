@@ -13,6 +13,8 @@
         v-for="(item, key) in itemList"  :key="key"
         :item="item"
         :grid="grid"
+        @changeItem="$emit('change-item', item.id)"
+        @delItem="$emit('del-item', item.id)"
       />
     </div>
   </section>
