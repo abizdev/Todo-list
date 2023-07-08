@@ -1,11 +1,14 @@
 <template>
   <navbar 
-  @getSearch="search = $event"
+    @getSearch="search = $event"
+    :lang="lang"
+    @changeLang="changeLang"
   />
   <content-items 
     :itemList="filterItemList"
     @changeItem="changeItem"
     @delItem="delItem"
+    :lang="lang"
   />
   <modal 
     v-show="openOrCloseM" 
@@ -15,6 +18,7 @@
     :edit="edit"
     :itemObj="itemObj"
     @editItem="editItem"
+    :lang="lang"
   />
   <add-btn @openModal="openModal" />
 </template>
@@ -24,6 +28,7 @@ import Navbar from './components/Navbar.vue';
 import ContentItems from './components/Contentitems.vue';
 import Modal from './components/Modal.vue';
 import AddBtn from './components/AddBtn.vue';
+import langs from '@/lang.js';
 
 export default {
   components: {
@@ -39,7 +44,9 @@ export default {
       currentId: 1,
       itemList: [],
       itemObj: {},
-      search: ''
+      search: '',
+      lang: 'ru',
+      langWords: {},
     }
   },
   computed: {
@@ -50,6 +57,9 @@ export default {
     }
   },
   methods: {
+    changeLang(value) {
+      this.lang = localStorage.lang = value
+    },
     openModal(bool) {
       this.openOrCloseM = bool
       this.edit = false
@@ -87,7 +97,11 @@ export default {
           this.currentId = this.itemList[this.itemList.length - 1].id
           this.currentId++
         }
-      }
+    }
+    localStorage.lang = localStorage.lang || 'ru'
+    this.lang = localStorage.lang || 'ru'
+    this.langWords = langs
+    localStorage.words = JSON.stringify(this.langWords)
   },
   watch: {
     itemList: {
@@ -96,6 +110,11 @@ export default {
         localStorage.setItem('list', JSON.stringify(this.itemList))
       },
       deep: true
+    }
+  },
+  provide() {
+    return {
+      words: JSON.parse(localStorage.words)
     }
   }
 }

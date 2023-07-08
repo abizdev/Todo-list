@@ -8,11 +8,11 @@
     <div class="item-btn">
       <button class="btn-edit" @click="$emit('change-item', item.id)">
         <img src="@/assets/images/change.png" alt="">
-        <span>РЕДАКТИРОВАТЬ</span>
+        <span>{{ words.editBtn[lang] }}</span>
       </button>
       <button class="btn-del" @click="$emit('del-item', item.id)">
         <img src="@/assets/images/delete.png" alt="">
-        <span>Удалить</span>
+        <span>{{ words.delBtn[lang] }}</span>
       </button>
     </div>
   </div>
@@ -20,6 +20,7 @@
 
 <script>
   export default {
-    props: ['item', 'grid'],
+    props: ['item', 'grid', 'lang'],
+    inject: ['words'],
   }
 </script>

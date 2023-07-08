@@ -2,8 +2,8 @@
   <Transition name="scale">
     <div class="modal" @click="closeModal">
       <div class="modal__content" @click.stop>
-        <h4 class="modal__content--title" v-if="!edit">Добавить заметку</h4>
-        <h4 class="modal__content--title" v-else>Изменить заметку</h4>
+        <h4 class="modal__content--title" v-if="!edit">{{ words.modalTitle[lang] }}</h4>
+        <h4 class="modal__content--title" v-else>{{ words.modalTitleEdit[lang] }}</h4>
         <label class="modal__content--input">
           <span>Title</span>
           <input type="text" placeholder="Title" v-model="title">
@@ -13,9 +13,9 @@
           <input type="text" placeholder="Content" v-model="desc">
         </label>
         <div class="modal__content--btns">
-          <button class="modal-btn btn-cancel" @click="closeModal">Отмена</button>
-          <button class="modal-btn btn-add" @click="addItem" v-if="!edit">Добавить</button>
-          <button class="modal-btn btn-add" @click="editItem" v-else>Изменить</button>
+          <button class="modal-btn btn-cancel" @click="closeModal">{{ words.cancelBtn[lang] }}</button>
+          <button class="modal-btn btn-add" @click="addItem" v-if="!edit">{{ words.addBtn[lang] }}</button>
+          <button class="modal-btn btn-add" @click="editItem" v-else>{{ words.changeBtn[lang] }}</button>
         </div>
       </div>
     </div>
@@ -24,7 +24,8 @@
 
 <script>
 export default {
-  props: ['currentId', 'edit', 'itemObj'],
+  props: ['currentId', 'edit', 'itemObj', 'lang'],
+  inject: ['words'],
   data() {
     return {
       title: '',
